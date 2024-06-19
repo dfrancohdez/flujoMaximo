@@ -1,25 +1,87 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import GraphInput from './GraphInput';
+import GraphVisualization from './GraphVisualization';
+import { fordFulkerson } from './fordFulkerson';
+import './App.scss';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+const App = () => {
+  const [graph, setGraph] = useState({ nodes: [], edges: [] ,fuente:"",destino:""});
+  const [maxFlow, setMaxFlow] = useState(null);
+  const [path, setPath] = useState([]);
 
-function App() {
+
+  const [error, setError] = useState(null);
+
+  const [boton,setBoton]=useState(false)
+
+
+
+  /*const handleGraphSubmit = (newGraph) => {
+    setGraph(newGraph);
+
+    const nodeIndexMap = newGraph.nodes.reduce((acc, node, index) => {
+      acc[node] = index;
+      return acc;
+    }, {});
+
+    const indexedEdges = newGraph.edges.map(edge => ({
+      from: nodeIndexMap[edge.from],
+      to: nodeIndexMap[edge.to],
+      capacity: edge.capacity
+    }));*/
+//////////////////////////////////////////////////
+  const handleGraphSubmit = (newGraph) => {
+    try {
+      setGraph(newGraph);
+      setError(null);
+
+      const nodeIndexMap = newGraph.nodes.reduce((acc, node, index) => {
+        acc[node] = index;
+        return acc;
+      }, {});
+
+      const indexedEdges = newGraph.edges.map(edge => ({
+        from: nodeIndexMap[edge.from],
+        to: nodeIndexMap[edge.to],
+        capacity: edge.capacity
+      }));
+
+      const destinoAux=newGraph.nodes.indexOf(graph.destino)
+      const fuenteAux=newGraph.nodes.indexOf(graph.fuente)
+///////////////////////////////////////////
+      const indexedGraph = { nodes: newGraph.nodes, edges: indexedEdges };
+      //const result = fordFulkerson(indexedGraph, 0, newGraph.nodes.length - 1);
+      console.log(newGraph.nodes)
+      console.log(fuenteAux+"   "+destinoAux)
+      const result = fordFulkerson(indexedGraph, fuenteAux, destinoAux);
+      console.log(result)
+      setMaxFlow(result.maxFlow);
+      setPath(result.path);
+    } catch (err) {
+      setError(err.message);
+      setMaxFlow(null);
+      setPath([]);
+      toast.error(err.message, {
+        position: "bottom-center"
+    });
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header text="Flujo maxímo"/>
+      <GraphInput onSubmit={handleGraphSubmit} boton={(prev)=>setBoton(prev)}/>
+      
+      {/* {error&&boton&&<div><h5>{error}</h5></div>} */}
+      {!error&&boton && <GraphVisualization graph={graph} maxFlow={maxFlow} path={path} />}
+      <ToastContainer/>
+      <Footer />
     </div>
+
   );
-}
+};
 
 export default App;
