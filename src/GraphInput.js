@@ -9,8 +9,7 @@ const GraphInput = ({ onSubmit,boton }) => {
   let destinoAux = ""
 
   const handleSubmit = (e) => {
-    
-
+    e.preventDefault();
     const nodesArray = nodes.split(',').map(node => node.trim());
     const edgesArray = edges.split('\n').map(edge => {
       const [from, to, capacity] = edge.split(' ').map(value => value.trim());
@@ -19,11 +18,19 @@ const GraphInput = ({ onSubmit,boton }) => {
     
     
 
-    console.log(fuenteAux + " " + destinoAux)
+    console.log(fuente + "  " + destino)
     
     onSubmit({ nodes: nodesArray, edges: edgesArray, fuente: fuente, destino: destino });
-    e.preventDefault();
+    
   };
+  const handleFuenteDestino=(e)=>{
+    const {value,name }=e.target
+    if(name==="fuente")
+      setFuente(value)
+    if(name==="destino")
+      setDestino(value)
+    //console.log(fuente+" "+destino)
+  }
 
 
 
@@ -46,7 +53,8 @@ const GraphInput = ({ onSubmit,boton }) => {
               placeholder='A'
               type="text"
               value={fuente}
-              onChange={(e) => setFuente(e.target.value)}
+              name="fuente"
+              onChange={handleFuenteDestino}
             />
           </div>
           <div className='input-container'>
@@ -54,8 +62,9 @@ const GraphInput = ({ onSubmit,boton }) => {
             <input
               placeholder='D'
               type="text"
+              name="destino"
               value={destino}
-              onChange={(e) => setDestino(e.target.value)}
+              onChange={handleFuenteDestino}
             />
           </div>
         </div>

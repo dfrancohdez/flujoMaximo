@@ -48,14 +48,15 @@ const App = () => {
         to: nodeIndexMap[edge.to],
         capacity: edge.capacity
       }));
+      console.log(newGraph.nodes)
+      console.log(newGraph.fuente+"   "+newGraph.destino)
 
-      const destinoAux=newGraph.nodes.indexOf(graph.destino)
-      const fuenteAux=newGraph.nodes.indexOf(graph.fuente)
+      const destinoAux=newGraph.nodes.indexOf(newGraph.destino)
+      const fuenteAux=newGraph.nodes.indexOf(newGraph.fuente)
 ///////////////////////////////////////////
       const indexedGraph = { nodes: newGraph.nodes, edges: indexedEdges };
       //const result = fordFulkerson(indexedGraph, 0, newGraph.nodes.length - 1);
-      console.log(newGraph.nodes)
-      console.log(fuenteAux+"   "+destinoAux)
+      
       const result = fordFulkerson(indexedGraph, fuenteAux, destinoAux);
       console.log(result)
       setMaxFlow(result.maxFlow);

@@ -6,7 +6,7 @@ const GraphVisualization = ({ graph, maxFlow, path }) => {
 
   useEffect(() => {
     if (graph.nodes.length > 0 && graph.edges.length > 0) {
-      const nodes = graph.nodes.map((id) => ({ id, label: id }));
+      const nodes = graph.nodes.map((id) => ({ id, label: id,color:graph.destino===id?"#ce4949":graph.fuente===id?"#6cd86c":"#70b4ca" }));
       const edges = graph.edges.map((edge) => ({
         from: edge.from,
         to: edge.to,
@@ -33,7 +33,7 @@ const GraphVisualization = ({ graph, maxFlow, path }) => {
   return (
     <div>
       <div ref={containerRef} style={{ height: '500px', background: "#ddd",margin:"30px",borderRadius:"30px"}}></div>
-      {maxFlow !== null && <div><h3>Flujo Máximo: {maxFlow}</h3></div>}
+      {maxFlow !== null && <div style={{textAlign:"center"}}><h3>Flujo Máximo: {maxFlow}</h3></div>}
     </div>
   );
 };
