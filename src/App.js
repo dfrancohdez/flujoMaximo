@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import GraphInput from './GraphInput';
-import GraphVisualization from './GraphVisualization';
+import Form from './components/Form';
+import Grafo from './components/Grafo';
 import { fordFulkerson } from './fordFulkerson';
 import './App.scss';
 import Header from './components/Header';
@@ -74,10 +74,10 @@ const App = () => {
   return (
     <div>
       <Header text="Flujo maxímo"/>
-      <GraphInput onSubmit={handleGraphSubmit} boton={(prev)=>setBoton(prev)}/>
+      <Form onSubmit={handleGraphSubmit} boton={(prev)=>setBoton(prev)}/>
       
       {/* {error&&boton&&<div><h5>{error}</h5></div>} */}
-      {!error&&boton && <GraphVisualization graph={graph} maxFlow={maxFlow} path={path} />}
+      {!error&&boton && <Grafo graph={graph} maxFlow={maxFlow} path={path} />}
       <ToastContainer/>
       <Footer />
     </div>

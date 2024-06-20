@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Network } from 'vis-network/standalone/esm/vis-network';
 
-const GraphVisualization = ({ graph, maxFlow, path }) => {
+const Grafo = ({ graph, maxFlow, path }) => {
   const containerRef = useRef(null);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ const GraphVisualization = ({ graph, maxFlow, path }) => {
         from: edge.from,
         to: edge.to,
         label: String(edge.capacity),
-        color: path.includes(`${edge.from}-${edge.to}`) ? 'red' : 'black'
+        color: path.includes(`${edge.from}-${edge.to}`) ? 'black' : 'black'
       }));
 
       const data = { nodes, edges };
@@ -38,4 +38,4 @@ const GraphVisualization = ({ graph, maxFlow, path }) => {
   );
 };
 
-export default GraphVisualization;
+export default Grafo;

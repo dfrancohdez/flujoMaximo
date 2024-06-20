@@ -82,7 +82,7 @@ C D 10'
             onChange={(e) => setEdges(e.target.value)}
           />
         </div>
-        <button onClick={()=>boton(true)} type="submit">Crear Grafo</button>
+        <button onClick={()=>boton(true)} type="submit"><h6 style={{color:"#222"}}>Calcular</h6></button>
       </form>
     </div>
     
